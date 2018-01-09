@@ -3,43 +3,55 @@
 grammar prolog;
 
 prolog_text
-    :   term*
+    :   read_term*
+    ;
+
+read_term
+    :   term* '.'
     ;
 
 term
-    :   atomic
-    |   variable
-    |   compound
+    :   name
+    |   VARIABLE
+//    |   integer
+//    |   float
+//    |   double_quoted_list
+    |   '(' // open
+    |   ')' // close
+    |   '[' // open_list
+    |   ']' // close_list
+    |   '{' // open_curly
+    |   '}' // close_curly
+    |   '|' // ht_sep
+    |   ',' // comma
     ;
 
-atomic
-    :   number
-    |   '-' number //TODO: no ws
-    |   atom
-    ;
-
-number
-    :   integer
-    |   float
-    ;
-
-atom
+name
     :   NAME
-    |   '[' ']'
-    |   '{' '}'
+    |   GRAPHIC
+    |   QUOTED
+    |   ';'
+    |   '!'
     ;
 
-variable
-    :
-    ;
-
-compound
-    :   atom open_ct
-        argument ( ',' argument )* //FIXME: comma infix operator vs argument/list separator, see 6.3.3.1
-        close_ct
+VARIABLE
+    :   '_'
+    |   '_'ALNUM+
+    |   [A-Z] ALNUM*
     ;
 
 
-NAME
-    : [a-z]+
-    ;
+NAME:   [a-z]ALNUM* ;
+GRAPHIC:    (GRAPHIC_CHAR|'\\')+ ;
+QUOTED: '\'' ('\\\n' | '\'\'' | . )*? '\'' ;
+
+
+fragment GRAPHIC_CHAR:   [#$&*+-./:<=>?@^~] ;
+fragment ALNUM: [a-zA-Z0-9] ;
+
+
+LINE_COMMENT:   '%' [^\n]* ('\n'|EOF) -> skip;
+
+COMMENT:    '/*' .*? '*/' -> skip;
+
+WS:     [ \t\r\n]+ -> skip;
