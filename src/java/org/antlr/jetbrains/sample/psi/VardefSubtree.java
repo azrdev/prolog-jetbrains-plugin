@@ -6,6 +6,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class VardefSubtree extends IdentifierDefSubtree {
 	public VardefSubtree(@NotNull ASTNode node) {
-		super(node);
+		super(node, node.getElementType());
 	}
 }

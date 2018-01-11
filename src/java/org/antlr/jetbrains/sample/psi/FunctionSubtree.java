@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class FunctionSubtree extends IdentifierDefSubtree implements ScopeNode {
 	public FunctionSubtree(@NotNull ASTNode node) {
-		super(node);
+		super(node, node.getElementType());
 	}
 
 	@Nullable
