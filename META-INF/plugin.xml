@@ -1,4 +1,4 @@
-<idea-plugin version="2">
+<idea-plugin>
 	<id>de.qrdn.prolog_idea</id>
 	<name>Prolog</name>
 	<version>0.1</version>
