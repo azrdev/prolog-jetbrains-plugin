@@ -1,56 +1,45 @@
 <idea-plugin version="2">
-	<id>org.antlr.jetbrains.sample</id>
-	<name>Sample Jetbrains Plugin</name>
+	<id>de.qrdn.prolog_idea</id>
+	<name>Prolog</name>
 	<version>0.1</version>
-	<vendor email="parrt@antlr.org" url="https://github.com/parrt/sample-jetbrains-plugin">ANTLR Project Sample Jetbrains Plugin</vendor>
+	<vendor email="azrdev@qrdn.de" url="https://github.com/azrdev/prolog-jetbrains-plugin">azrdev</vendor>
 
 	<description><![CDATA[
-  <p>Sample plugin</p>
-
-<p>
-<a href="https://github.com/parrt/sample-jetbrains-plugin">Github source</a>
+  Prolog Jetbrains IDE Plugin
+		<br/>
+  I'm happy to getting your issues, code, feature requests or simply an "I'm using it!" stance here or on the
+  <a href="https://github.com/azrdev/prolog-jetbrains-plugin">projects' GitHub site</a>.
   ]]></description>
 
 	<change-notes><![CDATA[
+		<h3>v0.1</h3>
+		Based upon <a href="https://github.com/parrt/sample-jetbrains-plugin">Jetbrains+ANTLR sample plugin</a>
         ]]>
 	</change-notes>
 
-	<!-- please see http://confluence.jetbrains.net/display/IDEADEV/Build+Number+Ranges for description -->
-	<idea-version since-build="133"/> <!-- requires 13.x, 14.x, 15.x -->
+	<idea-version since-build="133"/>
 
-	<!-- please see http://confluence.jetbrains.net/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
-		 on how to target different products -->
-	<!-- uncomment to enable plugin in all products -->
 	<depends>com.intellij.modules.lang</depends>
-
-	<application-components>
-	</application-components>
-
-	<project-components>
-		<component>
-			<implementation-class>org.antlr.jetbrains.sample.SamplePluginController</implementation-class>
-		</component>
-	</project-components>
 
 	<actions>
 	</actions>
 
 	<extensions defaultExtensionNs="com.intellij">
-		<fileTypeFactory implementation="org.antlr.jetbrains.sample.SampleFileTypeFactory"/>
-		<lang.syntaxHighlighterFactory key="Sample"
-									   implementationClass="org.antlr.jetbrains.sample.SampleSyntaxHighlighterFactory"/>
+		<fileTypeFactory implementation="de.qrdn.prolog_idea.PrologFileTypeFactory"/>
+		<lang.syntaxHighlighterFactory language="Prolog"
+									   implementationClass="de.qrdn.prolog_idea.PrologSyntaxHighlighterFactory"/>
 
-		<lang.parserDefinition language="Sample" implementationClass="org.antlr.jetbrains.sample.SampleParserDefinition"/>
-		<lang.ast.factory language="Sample" implementationClass="org.antlr.jetbrains.sample.SampleASTFactory"/>
+		<lang.parserDefinition language="Prolog" implementationClass="de.qrdn.prolog_idea.PrologParserDefinition"/>
+		<lang.ast.factory language="Prolog" implementationClass="de.qrdn.prolog_idea.PrologASTFactory"/>
 
-		<lang.psiStructureViewFactory language="Sample"
-									  implementationClass="org.antlr.jetbrains.sample.structview.SampleStructureViewFactory"/>
+		<lang.psiStructureViewFactory language="Prolog"
+									  implementationClass="de.qrdn.prolog_idea.structview.PrologStructureViewFactory"/>
 
-		<colorSettingsPage implementation="org.antlr.jetbrains.sample.SampleColorSettingsPage"/>
+		<colorSettingsPage implementation="de.qrdn.prolog_idea.PrologColorSettingsPage"/>
 
-		<externalAnnotator language="Sample" implementationClass="org.antlr.jetbrains.sample.SampleExternalAnnotator"/>
+		<externalAnnotator language="Prolog" implementationClass="de.qrdn.prolog_idea.PrologExternalAnnotator"/>
 
-		<lang.findUsagesProvider language="Sample"
-								 implementationClass="org.antlr.jetbrains.sample.SampleFindUsagesProvider"/>
+		<lang.findUsagesProvider language="Prolog"
+								 implementationClass="de.qrdn.prolog_idea.PrologFindUsagesProvider"/>
 	</extensions>
 </idea-plugin>
