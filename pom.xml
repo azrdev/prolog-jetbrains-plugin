@@ -14,13 +14,13 @@ and build a plug-in.
 	</parent>
 
 	<groupId>org.antlr</groupId>
-	<artifactId>sample-jetbrains-plugin</artifactId>
+	<artifactId>prolog-jetbrains-plugin</artifactId>
 	<packaging>jar</packaging>
 
 	<version>0.1-SNAPSHOT</version>
 
-	<name>Sample Jetbrains Plugin</name>
-	<description> ANTLR Project Sample Jetbrains Plugin </description>
+	<name>Prolog Jetbrains Plugin</name>
+	<description> Prolog Jetbrains Plugin </description>
 
 	<dependencies>
 		<dependency>
