@@ -39,14 +39,14 @@ public class PrologParserDefinition implements ParserDefinition {
 		                                                  PrologParser.ruleNames);
 		List<TokenIElementType> tokenIElementTypes =
 			PSIElementTypeFactory.getTokenIElementTypes(PrologLanguage.INSTANCE);
-		ID = tokenIElementTypes.get(PrologLexer.ID);
+		ID = tokenIElementTypes.get(PrologLexer.LETTER_DIGIT); //TODO: not the other atoms?
 	}
 
 	public static final TokenSet COMMENTS =
 		PSIElementTypeFactory.createTokenSet(
 			PrologLanguage.INSTANCE,
 			PrologLexer.COMMENT,
-			PrologLexer.LINE_COMMENT);
+			PrologLexer.MULTILINE_COMMENT);
 
 	public static final TokenSet WHITESPACE =
 		PSIElementTypeFactory.createTokenSet(
@@ -56,7 +56,9 @@ public class PrologParserDefinition implements ParserDefinition {
 	public static final TokenSet STRING =
 		PSIElementTypeFactory.createTokenSet(
 			PrologLanguage.INSTANCE,
-			PrologLexer.STRING);
+			PrologLexer.QUOTED,
+			PrologLexer.DOUBLE_QUOTED_LIST,
+			PrologLexer.BACK_QUOTED_STRING);
 
 	@NotNull
 	@Override
@@ -73,10 +75,10 @@ public class PrologParserDefinition implements ParserDefinition {
 			protected ParseTree parse(Parser parser, IElementType root) {
 				// start rule depends on root passed in; sometimes we want to create an ID node etc...
 				if ( root instanceof IFileElementType ) {
-					return ((PrologParser) parser).script();
+					return ((PrologParser) parser).p_text();
 				}
 				// let's hope it's an ID as needed by "rename function"
-				return ((PrologParser) parser).primary();
+				return ((PrologParser) parser).atom();
 			}
 		};
 	}
@@ -156,16 +158,18 @@ public class PrologParserDefinition implements ParserDefinition {
 		}
 		RuleIElementType ruleElType = (RuleIElementType) elType;
 		switch ( ruleElType.getRuleIndex() ) {
-			case PrologParser.RULE_function :
-				return new FunctionSubtree(node);
-			case PrologParser.RULE_vardef :
-				return new VardefSubtree(node);
-			case PrologParser.RULE_formal_arg :
-				return new ArgdefSubtree(node);
-			case PrologParser.RULE_block :
-				return new BlockSubtree(node);
-			case PrologParser.RULE_call_expr :
-				return new CallSubtree(node);
+			/*TODO createElement (*Subtree classes)
+			case PrologParser.RULE_term :
+				return new TermSubtree(node);
+			case PrologParser.RULE_atom :
+				return new AtomSubtree(node);
+			case PrologParser.RULE_clause :
+				return new ClauseSubtree(node);
+			case PrologParser.RULE_directive :
+				return new DirectiveSubtree(node);
+			case PrologParser.RULE_p_text :
+				return new PTextSubtree(node);
+			*/
 			default :
 				return new ANTLRPsiNode(node);
 		}

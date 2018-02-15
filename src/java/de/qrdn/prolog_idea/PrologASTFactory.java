@@ -12,6 +12,11 @@ import de.qrdn.prolog_idea.parser.PrologLexer;
 import de.qrdn.prolog_idea.psi.IdentifierPSINode;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
+
 /** How to create parse tree nodes (Jetbrains calls them AST nodes). Later
  *  non-leaf nodes are converted to PSI nodes by the {@link ParserDefinition}.
  *  Leaf nodes are already considered PSI nodes.  This is mostly just
@@ -37,8 +42,9 @@ public class PrologASTFactory extends CoreASTFactory {
 	@NotNull
 	@Override
 	public LeafElement createLeaf(@NotNull IElementType type, CharSequence text) {
+		/*
 		if ( type instanceof TokenIElementType &&
-			 ((TokenIElementType) type).getANTLRTokenType()==PrologLexer.ID)
+			 ((TokenIElementType) type).getANTLRTokenType() == PrologParserDefinition.ID.getANTLRTokenType())
 		{
 			// found an ID node; here we do not distinguish between definitions and references
 			// because we have no context information here. All we know is that
@@ -49,7 +55,7 @@ public class PrologASTFactory extends CoreASTFactory {
 			// TODO: try not to create one for IDs under def subtree roots like vardef, function
 			return new IdentifierPSINode(type, text);
 		}
-		LeafElement leaf = super.createLeaf(type, text);
-		return leaf;
+		*/
+		return super.createLeaf(type, text);
     }
 }

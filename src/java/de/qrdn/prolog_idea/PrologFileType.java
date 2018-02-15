@@ -35,6 +35,6 @@ public class PrologFileType extends LanguageFileType {
 	@Nullable
 	@Override
 	public Icon getIcon() {
-		return Icons.PROLOG_ICON;
+		return null;
 	}
 }

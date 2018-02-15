@@ -14,8 +14,9 @@ import java.util.Map;
 
 public class PrologColorSettingsPage implements ColorSettingsPage {
 	private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-		new AttributesDescriptor("Identifier", PrologSyntaxHighlighter.ID),
-		new AttributesDescriptor("Keyword", PrologSyntaxHighlighter.KEYWORD),
+		new AttributesDescriptor("Number", PrologSyntaxHighlighter.NUMBER),
+		new AttributesDescriptor("Variable", PrologSyntaxHighlighter.VARIABLE),
+		new AttributesDescriptor("Atom", PrologSyntaxHighlighter.ATOM),
 		new AttributesDescriptor("String", PrologSyntaxHighlighter.STRING),
 		new AttributesDescriptor("Line comment", PrologSyntaxHighlighter.LINE_COMMENT),
 		new AttributesDescriptor("Block comment", PrologSyntaxHighlighter.BLOCK_COMMENT),
@@ -30,7 +31,7 @@ public class PrologColorSettingsPage implements ColorSettingsPage {
 	@Nullable
 	@Override
 	public Icon getIcon() {
-		return Icons.PROLOG_ICON;
+		return null;
 	}
 
 	@NotNull
@@ -43,16 +44,21 @@ public class PrologColorSettingsPage implements ColorSettingsPage {
 	@Override
 	public String getDemoText() {
 		return
-			"/* block comment */\n"+
-			"func f(a:[]) {\n"+
-			"   // line comment\n"+
-			"   var i = 1\n" +
-			"   while (i < len(a)) {\n" +
-			"       print(a[i])\n" +
-			"   }\n" +
-			"   g(\"hi mom\")\n" +
-			"}\n" +
-			"func g(c:string) { }\n";
+			"/* block comment */\n" +
+			"% line comment\n" +
+			"fact(is, true).\n" +
+			"rule(A, B) :-\n" +
+			"  'quoted atom'(A) ,\n" +
+			"  atom(B) ;\n" +
+			"  body( [A, _] )\n" +
+			"  .\n" +
+			"lists( \"double quoted list\", {'curly bracketed list'} ).\n" +
+			"integers([ 12345, 0'ü, 0b1101, 0o777, 0xdeadbeef ]).\n" +
+			"float( 12345.54321e-10 ).\n" +
+			//TODO: operator syntax highlighting example
+			"graphic_tokens( #, \\\\, $, &, *, +, ., /, :, <=>, ?@^~, - ).\n" +
+			":- directive.\n"
+			;
 	}
 
 	@NotNull

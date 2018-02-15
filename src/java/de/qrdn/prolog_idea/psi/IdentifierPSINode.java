@@ -96,6 +96,7 @@ public class IdentifierPSINode extends ANTLRPsiLeafNode implements PsiNamedEleme
 		PsiElement parent = getParent();
 		IElementType elType = parent.getNode().getElementType();
 		// do not return a reference for the ID nodes in a definition
+		/*
 		if ( elType instanceof RuleIElementType ) {
 			switch ( ((RuleIElementType) elType).getRuleIndex() ) {
 				case RULE_statement :
@@ -106,6 +107,7 @@ public class IdentifierPSINode extends ANTLRPsiLeafNode implements PsiNamedEleme
 					return new FunctionRef(this);
 			}
 		}
+		*/
 		return null;
 	}
 }

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 public abstract class PrologElementRef extends PsiReferenceBase<IdentifierPSINode> {
 	public PrologElementRef(@NotNull IdentifierPSINode element) {
-		/** WARNING: You must send up the text range or you get this error:
+		/* WARNING: You must send up the text range or you get this error:
 		 * "Cannot find manipulator for PsiElement(ID) in org.antlr.jetbrains.sample.PrologElementRef"...
 		 *  when you click on an identifier.  During rename you get this
 		 *  error too if you don't impl handleElementRename().
@@ -38,9 +38,6 @@ public abstract class PrologElementRef extends PsiReferenceBase<IdentifierPSINod
 	 */
 	@Override
 	public PsiElement handleElementRename(String newElementName) throws IncorrectOperationException {
-//		System.out.println(getClass().getSimpleName()+".handleElementRename("+myElement.getName()+"->"+newElementName+
-//			                   ") on "+myElement+" at "+Integer.toHexString(myElement.hashCode()));
-
 		return myElement.setName(newElementName);
 	}
 
@@ -51,9 +48,6 @@ public abstract class PrologElementRef extends PsiReferenceBase<IdentifierPSINod
 	@Nullable
 	@Override
 	public PsiElement resolve() {
-//		System.out.println(getClass().getSimpleName()+
-//		                   ".resolve("+myElement.getName()+
-//		                   " at "+Integer.toHexString(myElement.hashCode())+")");
 		ScopeNode scope = (ScopeNode)myElement.getContext();
 		if ( scope==null ) return null;
 
@@ -63,8 +57,6 @@ public abstract class PrologElementRef extends PsiReferenceBase<IdentifierPSINod
 	@Override
 	public boolean isReferenceTo(PsiElement def) {
 		String refName = myElement.getName();
-//		System.out.println(getClass().getSimpleName()+".isReferenceTo("+refName+"->"+def.getText()+")");
-		// sometimes def comes in pointing to ID node itself. depends on what you click on
 		if ( def instanceof IdentifierPSINode && isDefSubtree(def.getParent()) ) {
 			def = def.getParent();
 		}

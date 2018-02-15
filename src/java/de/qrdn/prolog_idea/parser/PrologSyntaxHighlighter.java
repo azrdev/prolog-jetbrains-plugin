@@ -5,12 +5,11 @@ import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
+import de.qrdn.prolog_idea.PrologParserDefinition;
 import org.antlr.jetbrains.adaptor.lexer.ANTLRLexerAdaptor;
 import org.antlr.jetbrains.adaptor.lexer.PSIElementTypeFactory;
 import org.antlr.jetbrains.adaptor.lexer.TokenIElementType;
 import de.qrdn.prolog_idea.PrologLanguage;
-import de.qrdn.prolog_idea.parser.PrologLexer;
-import de.qrdn.prolog_idea.parser.PrologParser;
 import org.jetbrains.annotations.NotNull;
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
@@ -37,16 +36,18 @@ import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAtt
  */
 public class PrologSyntaxHighlighter extends SyntaxHighlighterBase {
 	private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
-	public static final TextAttributesKey ID =
-		createTextAttributesKey("SAMPLE_ID", DefaultLanguageHighlighterColors.IDENTIFIER);
-	public static final TextAttributesKey KEYWORD =
-		createTextAttributesKey("SAMPLE_KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
+	public static final TextAttributesKey NUMBER =
+		createTextAttributesKey("PROLOG_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
+	public static final TextAttributesKey VARIABLE =
+		createTextAttributesKey("PROLOG_VARIABLE", DefaultLanguageHighlighterColors.IDENTIFIER);
+	public static final TextAttributesKey ATOM =
+		createTextAttributesKey("PROLOG_ATOM", DefaultLanguageHighlighterColors.KEYWORD);
 	public static final TextAttributesKey STRING =
-		createTextAttributesKey("SAMPLE_STRING", DefaultLanguageHighlighterColors.STRING);
+		createTextAttributesKey("PROLOG_STRING", DefaultLanguageHighlighterColors.STRING);
 	public static final TextAttributesKey LINE_COMMENT =
-		createTextAttributesKey("SAMPLE_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
+		createTextAttributesKey("PROLOG_LINE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
 	public static final TextAttributesKey BLOCK_COMMENT =
-		createTextAttributesKey("SAMPLE_BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT);
+		createTextAttributesKey("PROLOG_BLOCK_COMMENT", DefaultLanguageHighlighterColors.BLOCK_COMMENT);
 
 	static {
 		PSIElementTypeFactory.defineLanguageIElementTypes(PrologLanguage.INSTANCE,
@@ -68,32 +69,28 @@ public class PrologSyntaxHighlighter extends SyntaxHighlighterBase {
 		TokenIElementType myType = (TokenIElementType)tokenType;
 		int ttype = myType.getANTLRTokenType();
 		TextAttributesKey attrKey;
+		if(PrologParserDefinition.STRING.contains(myType))
+			return new TextAttributesKey[]{STRING};
 		switch ( ttype ) {
-			case PrologLexer.ID :
-				attrKey = ID;
+			case PrologLexer.DECIMAL :
+			case PrologLexer.CHARACTER_CODE_CONSTANT :
+			case PrologLexer.BINARY :
+			case PrologLexer.OCTAL :
+			case PrologLexer.HEX :
+			case PrologLexer.FLOAT :
+				attrKey = NUMBER;
 				break;
-			case PrologLexer.VAR :
-			case PrologLexer.WHILE :
-			case PrologLexer.IF :
-			case PrologLexer.ELSE :
-			case PrologLexer.RETURN :
-			case PrologLexer.PRINT :
-			case PrologLexer.FUNC :
-			case PrologLexer.TYPEINT :
-			case PrologLexer.TYPEFLOAT :
-			case PrologLexer.TYPESTRING :
-			case PrologLexer.TYPEBOOLEAN :
-			case PrologLexer.TRUE :
-			case PrologLexer.FALSE :
-				attrKey = KEYWORD;
+			case PrologLexer.VARIABLE :
+				attrKey = VARIABLE;
 				break;
-			case PrologLexer.STRING :
-				attrKey = STRING;
+			case PrologLexer.LETTER_DIGIT :
+			case PrologLexer.GRAPHIC_TOKEN :
+				attrKey = ATOM;
 				break;
 			case PrologLexer.COMMENT :
 				attrKey = LINE_COMMENT;
 				break;
-			case PrologLexer.LINE_COMMENT :
+			case PrologLexer.MULTILINE_COMMENT :
 				attrKey = BLOCK_COMMENT;
 				break;
 			default :

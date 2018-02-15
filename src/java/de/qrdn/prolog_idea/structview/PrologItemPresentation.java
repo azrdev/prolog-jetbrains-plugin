@@ -1,9 +1,9 @@
 package de.qrdn.prolog_idea.structview;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
-import de.qrdn.prolog_idea.Icons;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -18,7 +18,7 @@ public class PrologItemPresentation implements ItemPresentation {
 	@Nullable
 	@Override
 	public Icon getIcon(boolean unused) {
-		return Icons.FUNC_ICON;
+		return AllIcons.Nodes.Function;
 	}
 
 	@Nullable
