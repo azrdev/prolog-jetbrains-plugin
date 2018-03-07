@@ -187,5 +187,5 @@ MULTILINE_COMMENT: '/*' ( MULTILINE_COMMENT | . )*? ('*/' | EOF) -> channel(HIDD
  *  it just confuses the issue. Hence, the hidden channel.
  */
 ERRCHAR
-   :   .   -> channel(HIDDEN) //TODO: TokenType.BAD_CHARACTER
+   :   .+?   -> channel(HIDDEN) //TODO: TokenType.BAD_CHARACTER
    ;

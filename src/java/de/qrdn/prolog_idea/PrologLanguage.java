@@ -1,6 +1,6 @@
 package de.qrdn.prolog_idea;
 
-import com.intellij.lang.Language;
+import org.intellij.lang.annotations.Language;
 
 public class PrologLanguage extends Language {
     public static final PrologLanguage INSTANCE = new PrologLanguage();
